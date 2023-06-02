@@ -39,8 +39,8 @@ class IncrementalFileStreamS3(IncrementalFileStream):
                 aws_access_key_id=provider["aws_access_key_id"], aws_secret_access_key=provider["aws_secret_access_key"]
             )
         else:
-            session = boto3session.Session()
-            client_config = Config(signature_version=UNSIGNED)
+            session = boto3session.Session(region_name=provider.get("aws_region",None))
+            client_config = Config(signature_version=provider.get("signature_version",UNSIGNED))
         client = make_s3_client(provider, config=client_config, session=session)
 
         ctoken = None

@@ -31,6 +31,20 @@ class SourceS3Spec(SourceFilesAbstractSpec, BaseModel):
             airbyte_secret=True,
             order=1,
         )
+        aws_region: Optional[str] = Field (
+            title="AWS Region ID",
+            default=None,
+            description="The AWS region (eg: us-west-2 / eu-central-1) of the bucket",
+            airbyte_secret=False,
+            order=2
+        )
+        signature_version: Optional[str] = Field(
+            title="S3 Signature Version",
+            default=None,
+            description="The signature version used when signing requests",
+            airbyte_secret=False,
+            order=3
+        )
         aws_secret_access_key: Optional[str] = Field(
             title="AWS Secret Access Key",
             default=None,

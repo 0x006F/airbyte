@@ -224,6 +224,20 @@
             "order": 1,
             "type": "string"
           },
+          "aws_region": {
+            "title": "AWS Region ID",
+            "description": "The AWS Region for the bucket",
+            "airbyte_secret": false,
+            "order": 2,
+            "type": "string" 
+          },
+          "signature_version":{
+            "title": "AWS SDK Signature Version",
+            "description": "The signature version used when signing requests",
+            "airbyte_secret": false,
+            "order": 3,
+            "type": "string"
+          },
           "aws_secret_access_key": {
             "title": "AWS Secret Access Key",
             "description": "In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.",

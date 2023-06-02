@@ -34,8 +34,8 @@ class S3File(StorageFile):
             )
             self._boto_s3_resource = make_s3_resource(self._provider, session=self._boto_session)
         else:
-            self._boto_session = boto3session.Session()
-            self._boto_s3_resource = make_s3_resource(self._provider, config=Config(signature_version=UNSIGNED), session=self._boto_session)
+            self._boto_session = boto3session.Session(region_name=self._provider.get("aws_region",None))
+            self._boto_s3_resource = make_s3_resource(self._provider, config=Config(signature_version=self._provider.get("aws_signature_version",UNSIGNED)), session=self._boto_session)
 
     @staticmethod
     def use_aws_account(provider: Mapping[str, str]) -> bool:
@@ -56,7 +56,7 @@ class S3File(StorageFile):
         if self.use_aws_account(self._provider):
             params = {"client": make_s3_client(self._provider, session=self._boto_session)}
         else:
-            config = ClientConfig(signature_version=UNSIGNED)
+            config = ClientConfig(signature_version=self._provider.get("aws_signature_version",UNSIGNED))
             params = {"client": make_s3_client(self._provider, config=config)}
         self.logger.debug(f"try to open {self.file_info}")
         # There are rare cases when some keys become unreachable during sync
